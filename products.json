@@ -1,0 +1,20 @@
+[
+    {
+        "id": 2,
+        "title": "Motorola",
+        "description": "Celular motorola ...",
+        "price": 60000,
+        "thumbnail": "https://...",
+        "code": 1,
+        "stock": 200
+    },
+    {
+        "id": 3,
+        "title": "Samsung",
+        "description": "Celular samsung ...",
+        "price": 4000,
+        "thumbnail": "https://...",
+        "code": 2023234,
+        "stock": 200
+    }
+]

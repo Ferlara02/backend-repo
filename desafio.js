@@ -1,11 +1,27 @@
+const fs = require('fs')
+
 class ProductManager {
-    constructor(){
-        this.products = []
+    constructor(path){
+        this.path = path
     }
 
-    addProduct(title, description, price, thumbnail, code, stock){
-        const  product = {
-            id: this.#getID() + 1,
+    async getProducts(){
+        try {
+            if(fs.existsSync(this.path)){
+                const products = await fs.promises.readFile(this.path, 'utf-8')
+                const productsJs = JSON.parse(products)
+                return productsJs
+            } else {
+                return []
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async addProduct(title, description, price, thumbnail, code, stock){
+        const product = {
+            id: await this.#getID() + 1,
             title,
             description,
             price,
@@ -14,55 +30,136 @@ class ProductManager {
             stock
         }
         const valuesProd = Object.values(product)
-        if(valuesProd.includes(undefined)){
-           return console.log('Todos los campos son obligatorios')
-        }else if(this.#getProduct(code)){
-           return console.log('El codigo ya pertenece a otro producto')
-        }else{
-            this.products.push(product)
+        const prodExists = await this.#getProduct(code)
+        try {
+            if(valuesProd.includes(undefined)){
+                return console.log('Todos los campos son obligatorios')
+            } else if (prodExists){
+                return console.log('El codigo ya pertenece a otro producto')
+            } else {
+                const productsFile = await this.getProducts()
+
+                productsFile.push(product)
+
+                await fs.promises.writeFile(this.path, JSON.stringify(productsFile))
+
+                console.log('Producto', product.title, 'Agregado con exito.')
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
-    #getID(){
-        let maxId = 0;
-        this.products.map((product) => {
-            if(product.id > maxId) maxId = product.id
-        })
-        return maxId
-    }
-    #getProduct(codeProd){
-        return this.products.find(prod => prod.code === codeProd)
-    }
-    getProducts(){
-        return this.products
-    }
-    getProductById(idProd){
-        if(!this.products.find(prod => prod.id === idProd)){
-            return 'Producto no encontrado';
+    async #getID(){
+        try{
+            const productsFile = await this.getProducts()
+            let maxId = 0;
+            productsFile.map((product) => {
+                if(product.id > maxId) maxId = product.id
+            })
+            return maxId
+        } catch (error){
+            console.log(error)
         }
-        return this.products.filter(prod => prod.id === idProd)
     }
+
+
+    async #getProduct(codeProd){
+        try{
+            const productsFile = await this.getProducts()
+            return productsFile.find(prod => prod.code === codeProd)
+        } catch (error){
+            console.log(error)
+        }
+            
+    }
+
+    async getProductById(idProd){
+        try{
+            const productsFile = await this.getProducts()
+            if(!productsFile.find(prod => prod.id === idProd)) {
+                return 'Producto no encontrado';
+            }
+            return productsFile.filter(prod => prod.id === idProd)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async updateProduct(id, fieldsToUpdate) {
+        try {
+          const productsFile = await this.getProducts();
+          const productIndex = productsFile.findIndex(prod => prod.id === id);
+          
+          if (productIndex === -1) {
+            return console.log('Producto no encontrado');
+          }
+          
+          const productToUpdate = productsFile[productIndex];
+
+          const updatedProduct = { ...productToUpdate, ...fieldsToUpdate };
+      
+          productsFile[productIndex] = updatedProduct;
+      
+          await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+      
+          console.log('Producto actualizado con éxito: ', productsFile[productIndex]);
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+    async deleteProduct(id) {
+        try {
+          const productsFile = await this.getProducts();
+
+          const productIndex = productsFile.findIndex(prod => prod.id === id);
+      
+          if (productIndex === -1) {
+            return console.log('Producto no encontrado');
+          }
+      
+          productsFile.splice(productIndex, 1);
+      
+          await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+      
+          console.log('Producto eliminado con éxito.');
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
 }
 
-const productManager1 = new ProductManager() //Instancio
+const productManager1 = new ProductManager('./products.json') //Instancio
 
-console.log('Array vacio: ', productManager1.getProducts()) //Array vacio
+const test = async() => {
+    const getProducts = await productManager1.getProducts() 
+    console.log('Consulta 1', getProducts)
 
-productManager1.addProduct('Producto Prueba', 'This is a trial product', 200, 'Sin imagen', 25) //le falta un parametro, devuelve primer condicional
+    await productManager1.addProduct('Samsung', 'Celular samsung ...', 4000, 'https://...', 2023234, 200)
 
-console.log('Producto prueba: ', productManager1.getProducts()) //Array vacío
+    const getProducts2 = await productManager1.getProducts()
+    console.log('2da consulta: ', getProducts2)
 
-productManager1.addProduct('Producto Prueba', 'This is a trial product', 200, 'Sin imagen', 25, 200) //Push
+    const productById = await productManager1.getProductById(2)
+    console.log('Consulta Prod by id:2 ', productById)
 
-console.log('1 Producto: ', productManager1.getProducts()) //Devuelve prod de prueba.
+    const updateProduct1 = await productManager1.updateProduct(2, {
+        title: "Motorola",
+        description: "Celular motorola ...",
+        price: 60000
+    })
 
-productManager1.addProduct('Producto Prueba', 'This is a trial product', 200, 'Sin imagen', 25, 200) //Agrego prod con mismo code que el anterior, devuelve 2do condicional
+    console.log(updateProduct1)
 
-productManager1.addProduct('Celular', 'Smartphone con 8gb RAM, 256gb ROM', 100000, 'https://etc', 26, 100)
+    const deleteProduct1 = await productManager1.deleteProduct(2)
+    console.log(deleteProduct1)
 
-console.log('Celular: ', productManager1.getProductById(2))
+}
 
+test()
 
 
 
