@@ -35,7 +35,7 @@ app.get('/products/:pid', async(req, res) => {
         if(prod) {
             res.status(200).json(prod)
         } else {
-            res.status(400).json({message: `Product ${pid} no encontrado`})
+            res.status(400).json({message: `Product ${pid} no encontrado.`})
         }
 
     } catch (error) {
