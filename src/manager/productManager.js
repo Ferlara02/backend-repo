@@ -19,18 +19,13 @@ export default class ProductManager {
         }
     }
 
-    async addProduct(title, description, price, thumbnail, code, stock){
+    async addProduct(obj){
         const product = {
             id: await this.#getID() + 1,
-            title,
-            description,
-            price,
-            thumbnail,
-            code,
-            stock
+            ...obj
         }
         const valuesProd = Object.values(product)
-        const prodExists = await this.#getProduct(code)
+        const prodExists = await this.#getProduct(product.code)
         try {
             if(valuesProd.includes(undefined)){
                 return console.log('Todos los campos son obligatorios')
@@ -71,7 +66,6 @@ export default class ProductManager {
         } catch (error){
             console.log(error)
         }
-            
     }
 
     async getProductById(idProd){
