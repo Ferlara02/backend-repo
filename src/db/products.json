@@ -1,1 +1,110 @@
-[{"id":2,"title":"Motorola","description":"Celular motorola ...","price":60000,"thumbnail":"https://...","code":1,"stock":200},{"id":3,"title":"Samsung S21","description":"Celular samsung ...","price":4000,"thumbnail":"https://...","code":2023234,"stock":200},{"id":4,"title":"Samsung S23","description":"Celular samsung ...","price":6000,"thumbnail":"https://...","code":2345,"stock":200},{"id":5,"title":"Xiaomi","description":"Celular Xiaomi ...","price":5000,"thumbnail":"https://...","code":2346,"stock":100},{"id":6,"title":"Xiaomi Mi 9T","description":"dsdsdsds","price":6000,"thumbnail":"htttps...","code":222222,"stock":10000}]
+[
+    {
+        "id": 2,
+        "title": "Motorola",
+        "description": "Celular motorola ...",
+        "price": 60000,
+        "thumbnail": "https://...",
+        "code": 1,
+        "stock": 200
+    },
+    {
+        "id": 3,
+        "title": "Samsung S21",
+        "description": "Celular samsung ...",
+        "price": 4000,
+        "thumbnail": "https://...",
+        "code": 2023234,
+        "stock": 200
+    },
+    {
+        "id": 4,
+        "title": "Samsung S23",
+        "description": "Celular samsung ...",
+        "price": 6000,
+        "thumbnail": "https://...",
+        "code": 2345,
+        "stock": 200
+    },
+    {
+        "id": 5,
+        "title": "Xiaomi",
+        "description": "Celular Xiaomi ...",
+        "price": 5000,
+        "thumbnail": "https://...",
+        "code": 2346,
+        "stock": 100
+    },
+    {
+        "id": 6,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnail": "htttps...",
+        "code": 222222,
+        "stock": 10000
+    },
+    {
+        "id": 7,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnail": "htttps...",
+        "code": 2222221
+    },
+    {
+        "id": 8,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnail": "htttps...",
+        "code": 2222223
+    },
+    {
+        "id": 10,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnail": "htttps...",
+        "code": 2222227,
+        "stock": 222
+    },
+    {
+        "id": 11,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnails": [
+            "htttps..."
+        ],
+        "code": 2222229,
+        "stock": 222,
+        "status": true,
+        "category": "ds"
+    },
+    {
+        "id": 12,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnails": [
+            "htttps..."
+        ],
+        "code": 220045,
+        "stock": 222,
+        "status": true
+    },
+    {
+        "id": 13,
+        "title": "Xiaomi Mi 9T",
+        "description": "dsdsdsds",
+        "price": 6000,
+        "thumbnails": [
+            "htttps...99"
+        ],
+        "code": 22,
+        "stock": 222,
+        "status": true,
+        "category": "eddw"
+    }
+]

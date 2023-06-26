@@ -22,12 +22,14 @@ export default class ProductManager {
     async addProduct(obj){
         const product = {
             id: await this.#getID() + 1,
-            ...obj
+            ...obj,
+            status: obj.status !== undefined ? obj.status : true
         }
-        const valuesProd = Object.values(product)
+
         const prodExists = await this.#getProduct(product.code)
+
         try {
-            if(valuesProd.includes(undefined)){
+            if(!product.title || !product.description || !product.code || product.price == 0 || product.stock < 0 || !product.category || !product.thumbnails || !Array.isArray(product.thumbnails)){ 
                 return console.log('Todos los campos son obligatorios')
             } else if (prodExists){
                 return console.log('El codigo ya pertenece a otro producto')

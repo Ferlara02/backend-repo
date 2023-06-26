@@ -48,4 +48,37 @@ router.post('/', async(req, res, next) => {
     }
 })
 
+router.put('/:idProd', async(req, res, next) => {
+    try {
+        const prod = req.body
+        const {idProd} = req.params
+        const prodExists = await productManager.getProductById(Number(idProd))
+
+        if(prodExists) {
+            await productManager.updateProduct(Number(idProd), prod)
+            res.status(200).json(`Product ${idProd} updated.`)
+        } else {
+            res.status(400).json({msg: `Prod ${idProd} does not exists.`})
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.delete('/:idProd', async(req, res, next) => {
+    try {
+        const {idProd} = req.params
+        const prodExists = await productManager.getProductById(Number(idProd))
+        if(prodExists) {
+            await productManager.deleteProduct(Number(idProd))
+            res.status(200).json(`Product ${idProd} deleted.`)
+        } else {
+            res.status(400).json({msg: `Prod ${idProd} does not exists.`})
+        }
+
+    } catch (error) {
+        next(error)
+    }
+})
+
 export default router;
