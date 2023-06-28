@@ -5,6 +5,7 @@ import { __dirname } from "../utils.js";
 import ProductManager from "../manager/productManager.js";
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
+import { uploader } from "../middlewares/multer.js";
 
 router.get('/', async(req, res, next) => {
     try {
@@ -38,10 +39,21 @@ router.get('/:pid', async(req, res, next) => {
     }
 })
 
-router.post('/', async(req, res, next) => {
+router.post('/', uploader.array('thumbnails'), async(req, res, next) => {
     try {
         const product = req.body
-        const productAdded = await productManager.addProduct(product)
+        product.price = Number(product.price);
+        product.stock = Number(product.stock);
+
+        const thumbsProd = req.files;
+
+        const newProduct = {
+            ...product,
+            thumbnails: product.thumbnails !== undefined ? product.thumbnails : []
+        }
+        if(thumbsProd) thumbsProd.forEach(file => newProduct.thumbnails.push(file.path));
+
+        const productAdded = await productManager.addProduct(newProduct)
         res.status(200).json(productAdded)
     } catch (error) {
         next(error)

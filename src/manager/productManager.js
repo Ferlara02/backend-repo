@@ -20,16 +20,15 @@ export default class ProductManager {
     }
 
     async addProduct(obj){
-        const product = {
-            id: await this.#getID() + 1,
-            ...obj,
-            status: obj.status !== undefined ? obj.status : true
-        }
-
-        const prodExists = await this.#getProduct(product.code)
-
         try {
-            if(!product.title || !product.description || !product.code || product.price == 0 || product.stock < 0 || !product.category || !product.thumbnails || !Array.isArray(product.thumbnails)){ 
+            const product = {
+                id: await this.#getID() + 1,
+                ...obj,
+                status: obj.status !== undefined ? obj.status : true
+            }
+            const prodExists = await this.#getProduct(product.code)
+    
+            if(!product.title || !product.description || !product.code || product.price == 0 || product.stock < 0 || !product.category || !Array.isArray(product.thumbnails)){ 
                 return console.log('Todos los campos son obligatorios')
             } else if (prodExists){
                 return console.log('El codigo ya pertenece a otro producto')
@@ -40,7 +39,7 @@ export default class ProductManager {
 
                 await fs.promises.writeFile(this.path, JSON.stringify(productsFile))
 
-                console.log('Producto', product.title, 'Agregado con exito.')
+                return console.log('Producto', product.title, 'Agregado con exito.')
             }
         } catch (error) {
             console.log(error)

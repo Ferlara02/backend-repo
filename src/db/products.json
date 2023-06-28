@@ -106,5 +106,71 @@
         "stock": 222,
         "status": true,
         "category": "eddw"
+    },
+    {
+        "id": 14,
+        "title": "Moto G",
+        "description": "Motorola G 2014",
+        "price": 6000,
+        "code": 400022,
+        "stock": 22212,
+        "category": "Celulares",
+        "thumbnails": [],
+        "status": true
+    },
+    {
+        "id": 15,
+        "title": "Motorola",
+        "description": "Celular motorola usado",
+        "price": "100000",
+        "code": "44346500",
+        "stock": "200",
+        "category": "\"Celulares\"",
+        "thumbnails": [
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\WNQ4XK2LH5C6PFT5CH4DGWCZK4.jpg"
+        ],
+        "status": true
+    },
+    {
+        "id": 16,
+        "title": "Huawei",
+        "description": "Celular Huawei usado",
+        "price": "100000",
+        "code": "44346500200",
+        "stock": "200",
+        "category": "Celulares",
+        "thumbnails": [
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\WNQ4XK2LH5C6PFT5CH4DGWCZK4.jpg",
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\FzqlJVkWwAIRF7z.png"
+        ],
+        "status": true
+    },
+    {
+        "id": 17,
+        "title": "Huawei",
+        "description": "Celular Huawei usado",
+        "price": "100000",
+        "code": "443465002001",
+        "stock": "200",
+        "category": "Celulares",
+        "status": "false",
+        "thumbnails": [
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\WNQ4XK2LH5C6PFT5CH4DGWCZK4.jpg",
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\FzqlJVkWwAIRF7z.png"
+        ]
+    },
+    {
+        "id": 18,
+        "title": "Huawei",
+        "description": "Celular Huawei usado",
+        "price": 100000,
+        "code": "4434650020012",
+        "stock": 200,
+        "category": "Celulares",
+        "status": "false",
+        "thumbnails": [
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\WNQ4XK2LH5C6PFT5CH4DGWCZK4.jpg",
+            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\FzqlJVkWwAIRF7z.png"
+        ]
     }
 ]
