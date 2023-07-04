@@ -1,3 +1,16 @@
 <main>
-    <h1>Bienvenido {{userFound.name}} {{userFound.lastname}}!</h1>
+    <h1>Lista de productos</h1>
+    <div class="listaContainer">
+        {{#if productsList.length}}
+            {{#each productsList}}
+                <ul class="productoContainer">
+                    <li class="title">{{title}}</li>
+                    <li>${{price}}</li>
+                    <li>Stock: {{stock}}</li>
+                </ul>
+            {{/each}}
+            {{else}}
+                <p>No hay productos</p>
+        {{/if}}
+    </div>
 </main>

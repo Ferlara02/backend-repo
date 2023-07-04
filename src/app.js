@@ -5,6 +5,10 @@ import cartsRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
 import { errorHandler } from './middlewares/errorHandler.js';
 import { __dirname } from './utils.js';
+import { Server } from 'socket.io';
+
+import ProductManager from './manager/productManager.js';
+const productManager = new ProductManager(__dirname + '/db/products.json')
 
 const app = express()
 
@@ -19,10 +23,20 @@ app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 
+
 app.use('/', viewsRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 
-app.listen(8080, () => {
+const httpServer = app.listen(8080, () => {
     console.log('Server ok on port 8080');
+})
+
+const socketServer = new Server(httpServer);
+
+socketServer.on('connection', async(socket) => {
+    console.log('¡New connection!', socket.id);
+
+    socketServer.emit('products', await productManager.getProducts())
+
 })

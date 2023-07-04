@@ -155,21 +155,6 @@
         "category": "Celulares",
         "status": "false",
         "thumbnails": [
-            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\WNQ4XK2LH5C6PFT5CH4DGWCZK4.jpg",
-            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\FzqlJVkWwAIRF7z.png"
-        ]
-    },
-    {
-        "id": 18,
-        "title": "Huawei",
-        "description": "Celular Huawei usado",
-        "price": 100000,
-        "code": "4434650020012",
-        "stock": 200,
-        "category": "Celulares",
-        "status": "false",
-        "thumbnails": [
-            "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\WNQ4XK2LH5C6PFT5CH4DGWCZK4.jpg",
             "D:\\User\\Escritorio\\Backend1\\backend-repo\\src\\images\\FzqlJVkWwAIRF7z.png"
         ]
     }
