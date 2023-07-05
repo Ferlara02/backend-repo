@@ -6,6 +6,9 @@ import ProductManager from "../manager/productManager.js";
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
 import { uploader } from "../middlewares/multer.js";
+import { socketServer } from "../app.js";
+
+
 
 router.get('/', async(req, res, next) => {
     try {
@@ -54,7 +57,9 @@ router.post('/', uploader.array('thumbnails'), async(req, res, next) => {
         if(thumbsProd) thumbsProd.forEach(file => newProduct.thumbnails.push(file.path));
 
         const productAdded = await productManager.addProduct(newProduct)
+        const products = await productManager.getProducts();
         res.status(200).json(productAdded)
+        socketServer.emit('product:added', {products, newProduct})
     } catch (error) {
         next(error)
     }
@@ -69,6 +74,7 @@ router.put('/:idProd', async(req, res, next) => {
         if(prodExists) {
             await productManager.updateProduct(Number(idProd), prod)
             res.status(200).json(`Product ${idProd} updated.`)
+
         } else {
             res.status(400).json({msg: `Prod ${idProd} does not exists.`})
         }
@@ -82,8 +88,10 @@ router.delete('/:idProd', async(req, res, next) => {
         const {idProd} = req.params
         const prodExists = await productManager.getProductById(Number(idProd))
         if(prodExists) {
-            await productManager.deleteProduct(Number(idProd))
+            const prodDeleted = await productManager.deleteProduct(Number(idProd))
+            const products = await productManager.getProducts()
             res.status(200).json(`Product ${idProd} deleted.`)
+            socketServer.emit('product:deleted', {products, idProd})
         } else {
             res.status(400).json({msg: `Prod ${idProd} does not exists.`})
         }

@@ -107,7 +107,6 @@ export default class ProductManager {
     async deleteProduct(id) {
         try {
           const productsFile = await this.getProducts();
-
           const productIndex = productsFile.findIndex(prod => prod.id === id);
       
           if (productIndex === -1) {
@@ -119,7 +118,6 @@ export default class ProductManager {
           await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
       
           console.log('Producto eliminado con éxito.');
-
         } catch (error) {
           console.log(error);
         }
