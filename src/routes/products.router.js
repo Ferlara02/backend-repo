@@ -88,10 +88,10 @@ router.delete('/:idProd', async(req, res, next) => {
         const {idProd} = req.params
         const prodExists = await productManager.getProductById(Number(idProd))
         if(prodExists) {
-            const prodDeleted = await productManager.deleteProduct(Number(idProd))
+            await productManager.deleteProduct(Number(idProd))
             const products = await productManager.getProducts()
             res.status(200).json(`Product ${idProd} deleted.`)
-            socketServer.emit('product:deleted', {products, idProd})
+            socketServer.emit('product:deleted', {products, prodExists})
         } else {
             res.status(400).json({msg: `Prod ${idProd} does not exists.`})
         }

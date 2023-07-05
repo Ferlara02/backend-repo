@@ -32,7 +32,7 @@ socket.on('product:added', ({products, newProduct}) => {
     }).join(' ');
     console.log(`Producto ${newProduct.title} agregado con éxito`)
 })
-socket.on('product:deleted', ({products, idProd}) => {
+socket.on('product:deleted', ({products, prodExists}) => {
     listContainer.innerHTML = products.map((prod) => {
         return `<ul class="productoContainer">
                     <li class="title">${prod.title}</li>
@@ -40,5 +40,5 @@ socket.on('product:deleted', ({products, idProd}) => {
                     <li>Stock: ${prod.stock}</li>
                 </ul>`
     }).join(' ');
-    console.log(`Producto ${idProd} eliminado con éxito`)
+    console.log(`Producto ${prodExists.title} eliminado con éxito`)
 })

@@ -75,7 +75,7 @@ export default class ProductManager {
             if(!productsFile.find(prod => prod.id === idProd)) {
                 return 'Producto no encontrado';
             }
-            return productsFile.filter(prod => prod.id === idProd)
+            return productsFile.find(prod => prod.id === idProd)
         } catch (error) {
             console.log(error)
         }
