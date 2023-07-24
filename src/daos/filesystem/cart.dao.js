@@ -1,6 +1,6 @@
 import fs from 'fs'
-import ProductManager from "../manager/productManager.js";
-import {__dirname} from "../utils.js";
+import ProductManager from "./product.dao.js";
+import {__dirname} from "../../utils.js";
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
 export default class CartManager {

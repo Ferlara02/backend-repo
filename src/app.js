@@ -6,9 +6,10 @@ import viewsRouter from './routes/views.router.js'
 import { errorHandler } from './middlewares/errorHandler.js';
 import { __dirname } from './utils.js';
 import { Server } from 'socket.io';
-
-import ProductManager from './manager/productManager.js';
+import "./daos/mongodb/connection.js"
+import ProductManager from './daos/filesystem/product.dao.js';
 const productManager = new ProductManager(__dirname + '/db/products.json')
+
 
 const app = express()
 
