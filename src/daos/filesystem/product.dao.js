@@ -5,7 +5,7 @@ export default class ProductManager {
         this.path = path
     }
 
-    async getProducts(){
+    async getAll(){
         try {
             if(fs.existsSync(this.path)){
                 const products = await fs.promises.readFile(this.path, 'utf-8')
@@ -19,7 +19,7 @@ export default class ProductManager {
         }
     }
 
-    async addProduct(obj){
+    async create(obj){
         try {
             const product = {
                 id: await this.#getID() + 1,
@@ -33,7 +33,7 @@ export default class ProductManager {
             } else if (prodExists){
                 return console.log('El codigo ya pertenece a otro producto')
             } else {
-                const productsFile = await this.getProducts()
+                const productsFile = await this.getAll()
 
                 productsFile.push(product)
 
@@ -48,7 +48,7 @@ export default class ProductManager {
 
     async #getID(){
         try{
-            const productsFile = await this.getProducts()
+            const productsFile = await this.getAll()
             let maxId = 0;
             productsFile.map((product) => {
                 if(product.id > maxId) maxId = product.id
@@ -62,16 +62,16 @@ export default class ProductManager {
 
     async #getProduct(codeProd){
         try{
-            const productsFile = await this.getProducts()
+            const productsFile = await this.getAll()
             return productsFile.find(prod => prod.code === codeProd)
         } catch (error){
             console.log(error)
         }
     }
 
-    async getProductById(idProd){
+    async getById(idProd){
         try{
-            const productsFile = await this.getProducts()
+            const productsFile = await this.getAll()
             if(!productsFile.find(prod => prod.id === idProd)) {
                 return 'Producto no encontrado';
             }
@@ -81,9 +81,9 @@ export default class ProductManager {
         }
     }
 
-    async updateProduct(id, fieldsToUpdate) {
+    async update(id, fieldsToUpdate) {
         try {
-          const productsFile = await this.getProducts();
+          const productsFile = await this.getAll();
           const productIndex = productsFile.findIndex(prod => prod.id === id);
           
           if (productIndex === -1) {
@@ -104,9 +104,9 @@ export default class ProductManager {
         }
     }
 
-    async deleteProduct(id) {
+    async delete(id) {
         try {
-          const productsFile = await this.getProducts();
+          const productsFile = await this.getAll();
           const productIndex = productsFile.findIndex(prod => prod.id === id);
       
           if (productIndex === -1) {
@@ -124,35 +124,6 @@ export default class ProductManager {
       }
 
 }
-
-// const productManager1 = new ProductManager('./products.json') //Instancio
-
-// const test = async() => {
-//     const getProducts = await productManager1.getProducts() 
-//     console.log('Consulta 1', getProducts)
-
-//     await productManager1.addProduct('Samsung', 'Celular samsung ...', 4000, 'https://...', 2023234, 200)
-
-//     const getProducts2 = await productManager1.getProducts()
-//     console.log('2da consulta: ', getProducts2)
-
-//     const productById = await productManager1.getProductById(2)
-//     console.log('Consulta Prod by id:2 ', productById)
-
-//     const updateProduct1 = await productManager1.updateProduct(2, {
-//         title: "Motorola",
-//         description: "Celular motorola ...",
-//         price: 60000
-//     })
-
-//     console.log(updateProduct1)
-
-//     const deleteProduct1 = await productManager1.deleteProduct(2)
-//     console.log(deleteProduct1)
-
-// }
-
-// test()
 
 
 

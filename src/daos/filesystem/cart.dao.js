@@ -8,7 +8,7 @@ export default class CartManager {
         this.path = path
     }
 
-    async getAllCarts(){
+    async getAll(){
         try {
             if(fs.existsSync(this.path)){
                 const cart = await fs.promises.readFile(this.path, 'utf-8')
@@ -20,7 +20,7 @@ export default class CartManager {
         }
     }
 
-    async createCart() {
+    async create() {
         try {
             const cart = {
                 id: await this.#getID() + 1,
@@ -35,9 +35,9 @@ export default class CartManager {
         }
     }
 
-    async getCartById(idCart) {
+    async getCart(idCart) {
         try {
-            const cartsFile = await this.getAllCarts()
+            const cartsFile = await this.getAll()
             const cartFind = cartsFile.find(cart => cart.id === idCart)
             if(!cartFind){
                 return `Cart ${idCart} does not exists.`
@@ -49,9 +49,9 @@ export default class CartManager {
     }
 
 
-    async saveProdInCart(idCart, idProd) {
+    async addProdToCart(idCart, idProd) {
         try {
-            const cartsFile = await this.getAllCarts()
+            const cartsFile = await this.getAll()
             const cartExists = cartsFile.find(cart => cart.id === idCart)
             if(cartExists) {
                 const prodExistsInCart = cartExists.products.find(prod => prod.product === idProd)
@@ -74,9 +74,9 @@ export default class CartManager {
         }
     }
 
-    async deleteCart(id) {
+    async delete(id) {
         try {
-            const cartsFile = await this.getAllCarts()
+            const cartsFile = await this.getAll()
             const cartIndex = cartsFile.findIndex(cart => cart.id === id)
 
             if(cartIndex === -1) {
@@ -94,7 +94,7 @@ export default class CartManager {
 
     async #getID(){
         try{
-            const cartsFile = await this.getAllCarts()
+            const cartsFile = await this.getAll()
             let maxId = 0;
             cartsFile.map((cart) => {
                 if(cart.id > maxId) maxId = cart.id

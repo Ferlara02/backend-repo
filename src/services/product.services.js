@@ -1,7 +1,17 @@
-
 import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
 
 const prodDao = new ProductDaoMongoDB()
+
+/* FileSystem
+
+import { __dirname } from "../utils.js";
+import CartManager from "../daos/filesystem/cart.dao.js";
+import ProductManager from "../daos/filesystem/product.dao.js";
+
+const prodDao = new ProductManager(__dirname + "/db/products.json")
+const cartDao = new CartManager(__dirname + "/db/carts.json")
+
+*/
 
 export const getAll = async(page, limit, category, available, sort) => {
     try {
