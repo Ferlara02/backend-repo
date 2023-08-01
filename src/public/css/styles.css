@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+    color: white;
 }
 body{
     min-height: 100vh;
@@ -12,7 +12,10 @@ body{
 main{
     padding: 1rem;
     max-width: 100%;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 h1{
     margin-top: 1rem;
@@ -33,6 +36,9 @@ h1{
     background: hsl(0 0% 10%);
     width: 230px;
     aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
     transition: background 0.1s;
     padding: 1rem;
@@ -79,4 +85,29 @@ li{
     font-weight: bold;
     font-size: 2rem;
     color: hsl(0 0% 100%);
+}
+.addToCart{
+    padding: 0.5rem;
+    background-color: rgb(192, 192, 192);
+    border-radius: 0.5rem;
+    margin: auto;
+    cursor: pointer;
+}
+.paginationContainer{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.paginationButton{
+    padding: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+}
+.paginationButton a{
+    padding: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
 }

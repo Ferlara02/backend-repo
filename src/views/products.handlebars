@@ -1,0 +1,31 @@
+<main>
+    <h1>Lista de productos</h1>
+    <div class="listaContainer">
+        {{#if productsList.length}}
+            {{#each productsList}}
+                <ul class="productoContainer">
+                    <li class="title">{{this.title}}</li>
+                    <li>${{this.price}}</li>
+                    <li>Stock: {{this.stock}}</li>
+                    <div class="addToCartDiv">
+                        <button class="addToCart" data-id="{{this._id}}">Add to cart</button>
+                    </div>
+                </ul>
+            {{/each}}
+            {{else}}
+                <p>No products found.</p>
+        {{/if}}
+    </div>
+    <div class="paginationContainer">
+        {{#if hasPrevPage}}
+            <li class="paginationButton"><a href="{{prevLink}}">Prev</a></li>
+        {{/if}}
+        <li class="paginationButton">{{currentPage}}</li>
+        {{#if hasNextPage}}
+            <li class="paginationButton"><a href="{{nextLink}}">Next</a></li>
+        {{/if}}
+    </div>
+</main>
+
+<script src="js/styles.js"></script>
+<script src="js/products.js"></script>
