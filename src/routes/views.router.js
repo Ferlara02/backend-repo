@@ -27,7 +27,7 @@ router.get('/products', async(req, res) => {
 router.get("/cart/:id", async(req, res) => {
     const {id} = req.params
     const cart = await cartService.getById(id)
-    const cartProds = cart.products.map((prod) => ({
+    const cartProds = cart.products?.map((prod) => ({
         ...prod.id,
         quantity: prod.quantity,
         total: prod.id.price * prod.quantity

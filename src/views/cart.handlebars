@@ -1,5 +1,8 @@
 <main>
     <h1>Lista de Carrito</h1>
+    {{#if cartRes}}
+        <h2>Cart is {{cartRes}}</h2>
+    {{/if}}
     <h2>Cart ID: {{idCart}}</h2>
     <div class="listaContainer">
         {{#if cartProds.length}}
