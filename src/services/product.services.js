@@ -3,10 +3,27 @@ import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
 
 const prodDao = new ProductDaoMongoDB()
 
-export const getAll = async() => {
+export const getAll = async(page, limit, category, available, sort) => {
     try {
-        const response = await prodDao.getAll()
-        return response
+        const response = await prodDao.getAll(page, limit, category, available, sort)
+        const result = {
+            payload: response.docs,
+            status: "success",
+            totalPages: response.totalPages,
+            prevPage: response.prevPage,
+            nextPage: response.nextPage,
+            page: response.page,
+            hasPrevPage: response.hasPrevPage,
+            hasNextPage: response.hasNextPage,
+            prevLink: response.hasPrevPage
+                ? `http://localhost:8080/views/products?page=${response.prevPage}`
+                : null,
+            nextLink: response.hasNextPage
+                ? `http://localhost:8080/views/products?page=${response.nextPage}`
+                : null,
+        }
+        return result
+        
     } catch (error) {
         console.log(error);
     }

@@ -13,8 +13,8 @@ export default class CartDaoMongoDB {
 
     async getCart(id){
         try {
-            const response = await CartModel.findById(id)
-            return response
+            const result = await CartModel.findById(id).populate('products.id').lean()
+            return result;
         } catch (error) {
             console.log(error);
         }
@@ -29,15 +29,15 @@ export default class CartDaoMongoDB {
             console.log(error);
         }
     }
-    async addProdToCart(id, idProd){
+    async addProdToCart(id, prodId){
         try {
             const cart = await CartModel.findById(id)
-            const isProdInCart = cart.products.find((prod) => prod.id.toString() === idProd.toString())
+            const isProdInCart = cart.products.find(prod=> prod.id.toString() === prodId)
             if(isProdInCart) {
                 isProdInCart.quantity++
             } else {
                 cart.products.push({
-                    id: idProd,
+                    id: prodId,
                     quantity: 1
                 })
             }
@@ -47,9 +47,42 @@ export default class CartDaoMongoDB {
             console.log(error);
         }
     }
+    async updQtyProdInCart(quantity, idCart, idProd) {
+        const cart = await CartModel.findById(idCart)
+        const prodInCart = cart.products.findIndex(prod=> prod.id.toString() === idProd)
+        if(!cart || prodInCart === -1) return false
+        cart.products[prodInCart].quantity = quantity
+        await cart.save()
+        return cart
+    }
+
+    async updateProductsCart(id, prods) {
+        try {
+            const cart = await CartModel.findById(id)
+            
+            cart.products = prods
+            await cart.save()
+            return cart
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async deleteProdFromCart(id, idProd){
+        try {
+            const cart = await CartModel.findById(id)
+            if(!cart) return false
+            cart.products = cart.products.filter((prod) => prod.id.toString() !== idProd)
+            await cart.save()
+            return cart
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async delete(id){
         try {
-            const response = await CartModel.findByIdAndDelete(id)
+            const response = await CartModel.findByIdAndUpdate(id, {products: []}, {new: true})
             return response
         } catch (error) {
             console.log(error);

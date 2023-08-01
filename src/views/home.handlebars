@@ -4,9 +4,9 @@
         {{#if productsList.length}}
             {{#each productsList}}
                 <ul class="productoContainer">
-                    <li class="title">{{title}}</li>
-                    <li>${{price}}</li>
-                    <li>Stock: {{stock}}</li>
+                    <li class="title">{{this.title}}</li>
+                    <li>${{this.price}}</li>
+                    <li>Stock: {{this.stock}}</li>
                 </ul>
             {{/each}}
             {{else}}

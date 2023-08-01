@@ -1,0 +1,15 @@
+<main>
+    <h1>Lista de Carrito</h1>
+    <div class="listaContainer">
+        {{#if cartProds.length}}
+            {{#each cartProds}}
+                <ul class="productoContainer">
+                    <li>ID PROD: {{_id}}</li>
+                    <li>Qty: {{quantity}}</li>
+                </ul>
+            {{/each}}
+            {{else}}
+                <p>No hay productos</p>
+        {{/if}}
+    </div>
+</main>
