@@ -6,6 +6,7 @@ import * as cartService from "../services/cart.services.js"
 
 
 router.get('/products', async(req, res) => {
+    const {user} = req.session
     const { page, limit, category, available, sort } = req.query
 
     const response = await prodService.getAll(page, limit, category, available, sort)
@@ -13,7 +14,9 @@ router.get('/products', async(req, res) => {
     const productsList = response.payload
     console.log(response);
 
-    res.render('products', {productsList, 
+    res.render('products', {
+        user, 
+        productsList, 
         totalPages: response.totalPages, 
         currentPage: response.page, 
         prevPage: response.prevPage, 
@@ -24,6 +27,7 @@ router.get('/products', async(req, res) => {
         nextLink: response.nextLink
     })
 })
+
 router.get("/cart/:id", async(req, res) => {
     const {id} = req.params
     const cart = await cartService.getById(id)
@@ -35,8 +39,26 @@ router.get("/cart/:id", async(req, res) => {
     console.log(cartProds);
     res.render("cart", {idCart: cart._id, cartProds})
 })
+
 router.get('/realTimeProducts', async(req, res) => {
     res.render('realTimeProducts')
 })
 
+
+router.get("/register", (req, res) => {
+    res.render("register");
+});
+  
+router.get("/error-auth-to-register", (req, res) => {
+    res.render("errorRegister");
+});
+  
+router.get("/login", (req, res) => {
+    res.render("login");
+});
+  
+router.get("/error-auth-to-login", (req, res) => {
+    res.render("errorLogin");
+});
+  
 export default router

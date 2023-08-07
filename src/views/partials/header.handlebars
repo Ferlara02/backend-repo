@@ -1,0 +1,8 @@
+<header class="header">
+    <h1><a href="/products">Productos</a></h1>
+    {{#if user }}
+      <button onclick="location.href='/users/logout'" class="btn2">Logout</button>
+    {{else}}
+      <button onclick="location.href='/login'" class="btn2">Login</button>
+    {{/if}}
+</header>

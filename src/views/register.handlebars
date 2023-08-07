@@ -1,0 +1,29 @@
+<div class="registerContainer">
+    <h1>Register</h1>
+    <form action="/users/register" method="post" class="form"> 
+        <div class="row">
+            <label for="first_name" class="label">First name</label>
+            <input type='text' name='first_name' id='first_name' class="input" placeholder="First Name"/>
+        </div>
+        <div class="row">
+            <label for="last_name" class="label">Last name</label>
+            <input type='text' name='last_name' id='last_name' class="input" placeholder="Last Name"/>
+        </div>
+        <div class="row">
+            <label for="email" class="label">Email</label>
+            <input type='email' name='email' id='email' class="input" placeholder="Email"/>
+        </div>
+        <div class="row">
+            <label for="age" class="label">Age</label>
+            <input type='number' name='age' id='age' class="input" placeholder="age"/>
+        </div>
+        <div class="row">
+            <label for="password" class="formLabel">Password</label>
+            <input type='password' name='password' id='password' class="input" placeholder="Password"/>
+        </div>
+        <a href="/register">Already have an account?</a>
+        <div class="divButton">
+            <button type='submit' class="btn">Register</button>
+        </div>
+    </form>
+</div>
