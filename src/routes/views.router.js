@@ -1,21 +1,24 @@
 import { Router } from "express";
 const router = Router()
 import { __dirname } from "../utils.js";
+import * as userService from "../services/user.services.js"
 import * as prodService from "../services/product.services.js"
 import * as cartService from "../services/cart.services.js"
 
 
 router.get('/products', async(req, res) => {
-    const {user} = req.session
-    const { page, limit, category, available, sort } = req.query
 
+    const user = await userService.getById(req.session.passport?.user)
+    console.log("USER DESDE VIEWS", user);
+    const { page, limit, category, available, sort } = req.query
+    const {first_name, age, last_name, email, role} = user
     const response = await prodService.getAll(page, limit, category, available, sort)
 
     const productsList = response.payload
-    console.log(response);
 
     res.render('products', {
-        user, 
+        user,
+        first_name, age, last_name, email, role, 
         productsList, 
         totalPages: response.totalPages, 
         currentPage: response.page, 

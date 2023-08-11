@@ -1,5 +1,6 @@
 import express from 'express';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
 import handlebars from 'express-handlebars';
 import productsRouter from './routes/products.router.js';
@@ -12,6 +13,9 @@ import "./daos/mongodb/connection.js"
 import ProductManager from './daos/filesystem/product.dao.js';
 import userRouter from "./routes/user.router.js"
 import { connectionString } from './daos/mongodb/connection.js';
+import passport from 'passport';
+import './passport/local-strategy.js';
+import "./passport/github-strategy.js"
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
 const mongoStoreOptions = {
@@ -25,7 +29,7 @@ const mongoStoreOptions = {
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 6000,
+        maxAge: 60000,
     },
 }
 
@@ -42,7 +46,13 @@ app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 
+app.use(cookieParser())
 app.use(session(mongoStoreOptions))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/', viewsRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
