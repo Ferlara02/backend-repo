@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy} from "passport-local";
 import * as service from "../services/user.services.js"
-
+import * as cartService from "../services/cart.services.js"
 
 const strategyOptions = {
     usernameField: "email",
@@ -13,7 +13,8 @@ const register = async (req, email, password, done) => {
     try {
         const user = await service.getByEmail(email)
         if(user) return done(null, false)
-        const newUser = await service.registerUser(req.body)
+        const cart = await cartService.create()
+        const newUser = await service.registerUser(req.body, cart)
         return done(null, newUser)
     } catch (error) {
         console.log(error);

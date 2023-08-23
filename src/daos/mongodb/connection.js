@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-export const connectionString = "mongodb+srv://ferlara022:Fernandolara135@ecommerce.zmsg5jz.mongodb.net/"
+export const connectionString = process.env.MONGO_ATLAS_CONNECTION
 
 try {
     await mongoose.connect(connectionString)

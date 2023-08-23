@@ -12,6 +12,7 @@ import { Server } from 'socket.io';
 import "./daos/mongodb/connection.js"
 import ProductManager from './daos/filesystem/product.dao.js';
 import userRouter from "./routes/user.router.js"
+import sessionRouter from "./routes/sessions.router.js"
 import { connectionString } from './daos/mongodb/connection.js';
 import passport from 'passport';
 import './passport/local-strategy.js';
@@ -57,6 +58,7 @@ app.use('/', viewsRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use("/users", userRouter);
+app.use("/api/sessions", sessionRouter);
 
 const httpServer = app.listen(8080, () => {
     console.log('Server ok on port 8080');

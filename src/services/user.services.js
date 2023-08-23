@@ -2,9 +2,9 @@ import UserDao from "../daos/mongodb/user.dao.js";
 
 const userDao = new UserDao()
 
-export const registerUser = async(user) => {
+export const registerUser = async(user, cart) => {
     try {
-        const newUser = await userDao.registerUser(user)
+        const newUser = await userDao.registerUser(user, cart)
         return newUser 
     } catch (error) {
         console.log(error);

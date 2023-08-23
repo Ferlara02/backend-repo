@@ -1,7 +1,7 @@
 import { UserModel } from "./models/user.model.js";
 import { createHash, isValidPassword } from "../../utils.js";
 export default class UserDao {
-    async registerUser(user) {
+    async registerUser(user, cart) {
         try {
             const {email, password} = user
             const userExist = await UserModel.findOne({email})
@@ -11,6 +11,7 @@ export default class UserDao {
                     ...user,
                     password: createHash(password),
                     role: isAnAdmin ? "admin" : "user",
+                    cart
                 })
                 return newUser
             } else return false
