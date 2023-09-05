@@ -2,7 +2,7 @@ import {Strategy as GithubStrategy} from "passport-github2"
 import passport from "passport"
 import * as service from "../services/user.services.js"
 import * as cartService from "../services/cart.services.js"
-import config from "../../config.js";
+import config from "../config.js"
 
 
 const strategyOptions = {
