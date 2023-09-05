@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
+import config from "../../config.js";
 
-export const connectionString = process.env.MONGO_ATLAS_CONNECTION
+export const connectionString = config.MONGO_ATLAS_CONNECTION
 
-try {
-    await mongoose.connect(connectionString)
-    console.log("Conectado a Mongo Atlas");
-} catch (error) {
-    console.log(error);
+export const initMongoDB = async() => {
+    try {
+        await mongoose.connect(connectionString)
+        console.log("Conectado a Mongo Atlas");
+    } catch (error) {
+        console.log(error);
+    }
 }

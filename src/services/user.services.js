@@ -1,6 +1,5 @@
-import UserDao from "../daos/mongodb/user.dao.js";
-
-const userDao = new UserDao()
+import persistence from "../daos/persistence.js"
+const {userDao} = persistence
 
 export const registerUser = async(user, cart) => {
     try {

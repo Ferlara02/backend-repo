@@ -17,6 +17,9 @@ import { connectionString } from './daos/mongodb/connection.js';
 import passport from 'passport';
 import './passport/local-strategy.js';
 import "./passport/github-strategy.js"
+import {Command} from "commander"
+import cors from "cors"
+
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
 const mongoStoreOptions = {
@@ -36,6 +39,14 @@ const mongoStoreOptions = {
 
 const app = express()
 
+const commander = new Command()
+commander
+    .option("-p <port>", "port server", 8080)
+    .option("-m <mode>", "mode server", "dev")
+
+commander.parse()
+
+app.use(cors({credentials: true, origin: "http://localhost:8080/"}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(__dirname + '/public'))
@@ -60,8 +71,12 @@ app.use('/api/carts', cartsRouter)
 app.use("/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 
-const httpServer = app.listen(8080, () => {
-    console.log('Server ok on port 8080');
+const PORT = commander.opts().p
+const mode = commander.opts().m
+
+
+const httpServer = app.listen(PORT, () => {
+    console.log(`Server ok on port ${PORT}, mode: ${mode}}`);
 })
 
 export const socketServer = new Server(httpServer);

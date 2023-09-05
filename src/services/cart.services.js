@@ -1,19 +1,5 @@
-import CartDaoMongoDB from "../daos/mongodb/cart.dao.js";
-import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
-const prodDao = new ProductDaoMongoDB()
-const cartDao = new CartDaoMongoDB()
-
-/* FileSystem
-
-import { __dirname } from "../utils.js";
-import CartManager from "../daos/filesystem/cart.dao.js";
-import ProductManager from "../daos/filesystem/product.dao.js";
-
-const prodDao = new ProductManager(__dirname + "/db/products.json")
-const cartDao = new CartManager(__dirname + "/db/carts.json")
-
-*/
-
+import persistence from "../daos/persistence.js"
+const {prodDao, cartDao} = persistence
 
 export const getAll = async() => {
     try {
