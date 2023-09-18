@@ -1,7 +1,8 @@
 import { Router } from "express";
 import passport from "passport"
 import * as controller from "../controllers/user.controllers.js"
-
+import { checkAdmin } from "../middlewares/checkAdmin.js";
+import { checkAuth } from "../middlewares/isAuth.js";
 const router = Router()
 
 router.post("/register", passport.authenticate("register", {
@@ -27,5 +28,6 @@ router.get("/profile-github", passport.authenticate("github", {
     passReqToCallback: true //para que a este endpoint: (/profile) le llegue el objeto req
 }))
 
+router.post('/add/:idProd/quantity/:quantity', checkAuth,controller.addProdToUserCart)
 
 export default router

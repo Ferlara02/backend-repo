@@ -6,14 +6,16 @@ import handlebars from 'express-handlebars';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
+import ticketRouter from "./routes/ticket.router.js"
 import { errorHandler } from './middlewares/errorHandler.js';
 import { __dirname } from './utils.js';
 import { Server } from 'socket.io';
-import "./daos/mongodb/connection.js"
-import ProductManager from './daos/filesystem/product.dao.js';
+import "./persistence/daos/mongodb/connection.js"
+import ProductManager from './persistence/daos/filesystem/product.dao.js';
 import userRouter from "./routes/user.router.js"
 import sessionRouter from "./routes/sessions.router.js"
-import { connectionString } from './daos/mongodb/connection.js';
+import emailRouter from "./routes/email.router.js"
+import { connectionString } from './persistence/daos/mongodb/connection.js';
 import passport from 'passport';
 import './passport/local-strategy.js';
 import "./passport/github-strategy.js"
@@ -41,7 +43,7 @@ const app = express()
 
 const commander = new Command()
 commander
-    .option("-p <port>", "port server", 8080)
+    .option("-p <port>", "port server", 8081)
     .option("-m <mode>", "mode server", "dev")
 
 commander.parse()
@@ -70,6 +72,8 @@ app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use("/users", userRouter);
 app.use("/api/sessions", sessionRouter);
+app.use("/api", emailRouter)
+app.use("/api/ticket", ticketRouter)
 
 const PORT = commander.opts().p
 const mode = commander.opts().m

@@ -4,9 +4,11 @@ import CartDaoMongoDB from "./mongodb/cart.dao.js";
 import ProductManager from "./filesystem/product.dao.js";
 import CartManager from "./filesystem/cart.dao.js";
 import { initMongoDB } from "./mongodb/connection.js";
+import TicketMongoDB from "./mongodb/ticket.dao.js";
 let userDao
 let prodDao
 let cartDao
+let ticketDao
 let persistence = process.argv[2]
 
 switch (persistence) {
@@ -21,6 +23,7 @@ switch (persistence) {
         userDao = new UserDao()
         prodDao = new ProductDaoMongoDB()
         cartDao = new CartDaoMongoDB()
+        ticketDao = new TicketMongoDB()
         console.log(persistence);
         break;
     default:
@@ -28,8 +31,9 @@ switch (persistence) {
         userDao = new UserDao()
         prodDao = new ProductDaoMongoDB()
         cartDao = new CartDaoMongoDB()
+        ticketDao = new TicketMongoDB()
         console.log(persistence);
         break;
 }
 
-export default { userDao, cartDao, prodDao }
+export default { userDao, cartDao, prodDao, ticketDao }

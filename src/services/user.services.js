@@ -1,5 +1,5 @@
-import persistence from "../daos/persistence.js"
-const {userDao} = persistence
+import persistence from "../persistence/daos/factory.js"
+const {userDao, prodDao} = persistence
 
 export const registerUser = async(user, cart) => {
     try {
@@ -32,6 +32,16 @@ export const getById = async(id) => {
     try {
         const userExist = await userDao.getById(id)
         return userExist
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const addProdToUserCart = async(userId, prodId, quantity) => {
+    try {
+        const existProd = await prodDao.getById(prodId);
+        if(!existProd) return false;
+        return userDao.addProdToUserCart(userId, prodId, quantity);
     } catch (error) {
         console.log(error);
     }

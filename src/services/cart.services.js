@@ -1,4 +1,4 @@
-import persistence from "../daos/persistence.js"
+import persistence from "../persistence/daos/factory.js"
 const {prodDao, cartDao} = persistence
 
 export const getAll = async() => {

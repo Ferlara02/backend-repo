@@ -20,6 +20,7 @@ export default class CartDaoMongoDB {
         }
     }
 
+
     async create(){
         try {
             const response = await CartModel.create({products: []})
@@ -29,16 +30,16 @@ export default class CartDaoMongoDB {
             console.log(error);
         }
     }
-    async addProdToCart(id, prodId){
+    async addProdToCart(id, prodId, quantity){
         try {
             const cart = await CartModel.findById(id)
-            const isProdInCart = cart.products.find(prod=> prod.id.toString() === prodId)
+            const isProdInCart = cart.products.find(prod=> prod.id.toString() === prodId.toString())
             if(isProdInCart) {
-                isProdInCart.quantity++
+                isProdInCart.quantity += quantity
             } else {
                 cart.products.push({
                     id: prodId,
-                    quantity: 1
+                    quantity
                 })
             }
             await cart.save()

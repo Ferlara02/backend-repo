@@ -1,5 +1,7 @@
 import { UserModel } from "./models/user.model.js";
-import { createHash, isValidPassword } from "../../utils.js";
+import { createHash, isValidPassword } from "../../../utils.js";
+import CartDaoMongoDB from "./cart.dao.js";
+const cartDao = new CartDaoMongoDB()
 export default class UserDao {
     async registerUser(user, cart) {
         try {
@@ -55,6 +57,20 @@ export default class UserDao {
         } catch (error) {
           console.log(error)
           throw new Error(error)
+        }
+    }
+
+    async addProdToUserCart(userId, prodId, quantity){
+        try {
+            const user = await UserModel.findById(userId);
+            if(!user) return false;
+            console.log("CART--->", user.cart);
+            const productAdded = await cartDao.addProdToCart(user.cart, prodId, quantity)
+            console.log(productAdded);
+            user.save();
+            return user;
+        } catch (error) {
+            console.log(error);
         }
     }
 }

@@ -1,5 +1,6 @@
 import * as service from "../services/user.services.js"
-import UserDao from "../daos/mongodb/user.dao.js"
+import UserDao from "../persistence/daos/mongodb/user.dao.js"
+import { addProdToCart } from "../services/cart.services.js";
 const userDao = new UserDao()
 // export const registerUser = async(req, res) => {
 //     try {
@@ -64,4 +65,19 @@ export const githubResponse = async (req, res ,next) => {
     } catch (error) {
         next(error.message)
     }
+}
+
+export const addProdToUserCart = async(req, res, next) => {
+    try {
+        const _id = req.session.passport?.user;
+        console.log("USER--->", req.session.passport?.user);
+        const { idProd } = req.params;
+        const { quantity } = req.params;
+        const newProdToUserCart = await service.addProdToUserCart(_id, idProd, Number(quantity));
+        if(!newProdToUserCart) res.status(404).json({msg: 'Error add product to user cart'})
+        res.status(200).json(newProdToUserCart);
+    } catch (error) {
+        next(error.message);
+    }
+    
 }

@@ -1,5 +1,8 @@
-import persistence from "../daos/persistence.js"
+import persistence from "../persistence/daos/factory.js"
 const {prodDao} = persistence
+import ProductRepository from "../persistence/repository/product/product.repository.js"
+const prodRepository = new ProductRepository()
+
 
 export const getAll = async(page, limit, category, available, sort) => {
     try {
@@ -37,10 +40,30 @@ export const getById = async(id) => {
     }
 }
 
+export const getByIdDTO = async(id) => {
+    try {
+        const prod = await ProductRepository.getByIdDTO(id)
+        if(!prod) return false
+        else return prod 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const create = async(obj) => {
     try {
         const newProd = await prodDao.create(obj)
         if(!newProd) return false 
+        else return newProd
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const createProdDTO = async(obj) => {
+    try {
+        const newProd = await prodRepository.createProdDTO(obj)
+        if(!newProd) return false
         else return newProd
     } catch (error) {
         console.log(error);
