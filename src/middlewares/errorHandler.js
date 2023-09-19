@@ -1,6 +1,7 @@
-export const errorHandler = (error, req, res, next) => {
-    console.log(`${error.message}`);
+import { HttpResponse } from "../utils/http.response.js";
+const httpResponse = new HttpResponse()
 
-    const status = error.status || 404
-    res.status(status).send(error.message)
+export const errorHandler = (error, req, res, next) => {
+    console.log(`Llegó al Middleware: ${error.message}`);
+    return httpResponse.NotFound(res, error.message)
 }

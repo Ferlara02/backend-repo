@@ -30,7 +30,7 @@ export default class CartDaoMongoDB {
             console.log(error);
         }
     }
-    async addProdToCart(id, prodId, quantity){
+    async addProdToCart(id, prodId, quantity = 1){
         try {
             const cart = await CartModel.findById(id)
             const isProdInCart = cart.products.find(prod=> prod.id.toString() === prodId.toString())

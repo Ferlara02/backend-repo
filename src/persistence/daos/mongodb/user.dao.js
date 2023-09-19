@@ -18,7 +18,7 @@ export default class UserDao {
                 return newUser
             } else return false
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     }
 
@@ -33,7 +33,7 @@ export default class UserDao {
             } 
             return false
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     }
 
@@ -43,8 +43,7 @@ export default class UserDao {
           if(userExist) return userExist
           else return false
         } catch (error) {
-          console.log(error)
-          // throw new Error(error)
+          throw new Error(error.message)
         }
     }
     
@@ -55,8 +54,7 @@ export default class UserDao {
           if(userExist) return userExist
           else return false
         } catch (error) {
-          console.log(error)
-          throw new Error(error)
+          throw new Error(error.message)
         }
     }
 
@@ -70,7 +68,7 @@ export default class UserDao {
             user.save();
             return user;
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     }
 }

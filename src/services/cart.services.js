@@ -6,7 +6,7 @@ export const getAll = async() => {
         const response = await cartDao.getAll()
         return response
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -16,7 +16,7 @@ export const getById = async(id) => {
         if(!item) return false
         else return item
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -25,7 +25,7 @@ export const create = async() => {
         const newCart = await cartDao.create()
         return newCart
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -38,7 +38,7 @@ export const addProdToCart = async(id, prodId) => {
         const newProdInCart = await cartDao.addProdToCart(id, prodId)
         return newProdInCart
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -62,7 +62,7 @@ export const updateCartProducts = async(id, prods) => {
 
 
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -74,7 +74,7 @@ export const updQtyProdInCart = async(quantity, idCart, idProd) => {
         if(!response) throw new Error("Cart or Product not found")
         return response
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -87,7 +87,7 @@ export const deleteProdFromCart = async(id, idProd) => {
         const prodDeleted = await cartDao.deleteProdFromCart(id, idProd)
         return prodDeleted
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }
 
@@ -96,6 +96,6 @@ export const removeCart = async(id) => {
         const cartDeleted = await cartDao.delete(id)
         return cartDeleted
     } catch (error) {
-        console.log(error);
+       throw new Error(error.message);
     }
 }

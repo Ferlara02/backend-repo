@@ -29,6 +29,6 @@ export const generateTicket = async(userId) => {
             return ticket
         }
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }

@@ -1,6 +1,7 @@
 import persistence from "../persistence/daos/factory.js"
 const {prodDao} = persistence
 import ProductRepository from "../persistence/repository/product/product.repository.js"
+import { generateProduct } from "../utils/mock.products.js"
 const prodRepository = new ProductRepository()
 
 
@@ -26,7 +27,7 @@ export const getAll = async(page, limit, category, available, sort) => {
         return result
 
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }
 
@@ -36,7 +37,7 @@ export const getById = async(id) => {
         if(!item) return false
         else return item
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }
 
@@ -46,7 +47,7 @@ export const getByIdDTO = async(id) => {
         if(!prod) return false
         else return prod 
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }
 
@@ -56,7 +57,20 @@ export const create = async(obj) => {
         if(!newProd) return false 
         else return newProd
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
+    }
+}
+
+export const createMock = async() => {
+    try {
+        const products = []
+        for(let i = 0; i < 100; i++) {
+            const product = generateProduct()
+            products.push(product)
+        }
+        return products
+    } catch (error) {
+        throw new Error(error.message)
     }
 }
 
@@ -66,7 +80,7 @@ export const createProdDTO = async(obj) => {
         if(!newProd) return false
         else return newProd
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }
 
@@ -75,7 +89,7 @@ export const update = async(id, obj) => {
         const item = await prodDao.update(id, obj)
         return item
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }
 
@@ -84,6 +98,6 @@ export const remove = async(id) => {
         const itemDeleted = await prodDao.delete(id)
         return itemDeleted
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 }

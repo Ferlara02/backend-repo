@@ -21,6 +21,8 @@ import './passport/local-strategy.js';
 import "./passport/github-strategy.js"
 import {Command} from "commander"
 import cors from "cors"
+import { HttpResponse } from './utils/http.response.js';
+const httpResponse = new HttpResponse()
 
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
@@ -43,7 +45,7 @@ const app = express()
 
 const commander = new Command()
 commander
-    .option("-p <port>", "port server", 8081)
+    .option("-p <port>", "port server", 8080)
     .option("-m <mode>", "mode server", "dev")
 
 commander.parse()
@@ -52,7 +54,7 @@ app.use(cors({credentials: true, origin: "http://localhost:8080/"}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(__dirname + '/public'))
-app.use(errorHandler)
+
 
 
 //set handlebars
@@ -74,6 +76,8 @@ app.use("/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api", emailRouter)
 app.use("/api/ticket", ticketRouter)
+
+app.use(errorHandler) //middleware que ataja todos los errores
 
 const PORT = commander.opts().p
 const mode = commander.opts().m
