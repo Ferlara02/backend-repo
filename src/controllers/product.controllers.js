@@ -2,6 +2,7 @@ import * as service from "../services/product.services.js"
 import { HttpResponse } from "../utils/http.response.js"
 const httpResponse = new HttpResponse()
 import error from "../utils/errors.dictionary.js"
+import { logger } from "../utils/winston.config.js"
 
 export const getAll = async (req, res, next) => {
     try {
@@ -20,7 +21,10 @@ export const getById = async (req, res, next) => {
         const {id} = req.params
         const prod = await service.getById(id)
         if(!prod) return httpResponse.NotFound(res, error.PROD_NOT_FOUND)
-        else return httpResponse.Ok(res, prod)
+        else {
+            logger.info(prod)
+            return httpResponse.Ok(res, prod)
+        }
     } catch (error) {
         next(error.message)
     }
@@ -81,6 +85,7 @@ export const createProdDTO = async(req, res, next) => {
 export const createMock = async(req, res) => {
     try {
         const response = await service.createMock()
+        logger.info(`MOCK CREADO`)
         res.json(response)
     } catch (error) {
         next(error.message)

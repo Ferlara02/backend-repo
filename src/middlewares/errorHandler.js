@@ -1,7 +1,8 @@
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse()
+import { logger } from "../utils/winston.config.js"
 
 export const errorHandler = (error, req, res, next) => {
-    console.log(`Llegó al Middleware: ${error.message}`);
+    logger(`Llegó al errorHandler: ${error.message}`);
     return httpResponse.NotFound(res, error.message)
 }

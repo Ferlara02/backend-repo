@@ -2,10 +2,12 @@ import * as service from "../services/cart.services.js"
 import { HttpResponse } from "../utils/http.response.js"
 const httpResponse = new HttpResponse()
 import error from "../utils/errors.dictionary.js"
+import { logger } from "../utils/winston.config.js"
 
 export const getAll = async (req, res, next) => {
     try {
         const responseCarts = await service.getAll()
+
         return httpResponse.Ok(res, responseCarts)
     } catch (error) {
         next(error.message)
@@ -16,7 +18,11 @@ export const getById = async (req, res, next) => {
     try {
         const {id} = req.params
         const cart = await service.getById(id)
-        if(!cart) return httpResponse.NotFound(res, error.CART_NOT_FOUND)
+        logger.debug(cart)
+        if(!cart) {
+            logger.error("Cart not found")
+            return httpResponse.NotFound(res, error.CART_NOT_FOUND)
+        }
         else return httpResponse.Ok(res, cart.products)
     } catch (error) {
         next(error.message)

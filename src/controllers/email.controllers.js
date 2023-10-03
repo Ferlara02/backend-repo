@@ -1,6 +1,6 @@
 import { mailOptions, transporter } from "../services/email.service.js";
 import "dotenv/config"
-
+import { logger } from "../utils/winston.config.js"
 
 export const sendMailEthereal = async(req, res) => {
     try {
@@ -17,6 +17,6 @@ export const sendMailEthereal = async(req, res) => {
         const response = await transporter.sendMail(gmailOptions)
         res.json(response)
     } catch (error) {
-        console.log(error);
+        logger.error(error.message)
     }
 }

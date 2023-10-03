@@ -17,6 +17,7 @@ import sessionRouter from "./routes/sessions.router.js"
 import emailRouter from "./routes/email.router.js"
 import { connectionString } from './persistence/daos/mongodb/connection.js';
 import passport from 'passport';
+import loggerRouter from "./routes/logger.router.js"
 import './passport/local-strategy.js';
 import "./passport/github-strategy.js"
 import {Command} from "commander"
@@ -76,7 +77,7 @@ app.use("/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api", emailRouter)
 app.use("/api/ticket", ticketRouter)
-
+app.use("/winston", loggerRouter)
 app.use(errorHandler) //middleware que ataja todos los errores
 
 const PORT = commander.opts().p
