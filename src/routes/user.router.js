@@ -30,4 +30,8 @@ router.get("/profile-github", passport.authenticate("github", {
 
 router.post('/add/:idProd/quantity/:quantity', checkAuth,controller.addProdToUserCart)
 
+router.post("/reset-pass", checkAuth, controller.resetPass)
+
+router.put("/new-pass", checkAuth, controller.updatePass)
+
 export default router

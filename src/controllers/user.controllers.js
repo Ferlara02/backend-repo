@@ -1,25 +1,13 @@
 import * as service from "../services/user.services.js"
 import UserDao from "../persistence/daos/mongodb/user.dao.js"
 import { addProdToCart } from "../services/cart.services.js";
+import { HttpResponse } from "../utils/http.response.js";
+
 const userDao = new UserDao()
-// export const registerUser = async(req, res) => {
-//     try {
-//         const user = req.body
-//         const userRegistered = await service.registerUser(user)
-//         if(userRegistered) res.redirect("/login")
-//         else res.redirect("/error-auth-to-register")
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 
 export const registerUser = async(req, res, next) => {
     try {
-        console.log("Message:", req.session);
-        console.log("passport:", req.session.passport);
-        console.log("user:", req.session.passport.user);
-        console.log("REQ--->>", req);
         if(req.session.passport.user) res.redirect("/login")
         else res.redirect("/error-auth-to-register")
     } catch (error) {
@@ -80,4 +68,32 @@ export const addProdToUserCart = async(req, res, next) => {
         next(error.message);
     }
     
+}
+
+export const resetPass = async(req, res, next) => {
+    try {
+        const user = await service.getById(req.session.passport?.user)
+
+        const tokenResetPass = await service.resetPass(user)
+        if(!tokenResetPass) return HttpResponse.NotFound(res, 'Email not send')
+        res.cookie('tokenpass', tokenResetPass)
+        return HttpResponse.Ok(res, {msg: 'Email reset password send OK'})
+    } catch (error) {
+        next(error.message)
+    }
+}
+
+export const updatePass = async(req, res, next) => {
+    try {
+        const user = await service.getById(req.session.passport?.user)
+        const {pass} = req.body
+        const {tokenpass} = req.cookies
+        if(!tokenpass) return HttpResponse.Forbidden(res, "Token expired")
+        const updPass = await service.updatePass(user, pass)
+        if(!updPass) return HttpResponse.NotFound(res, "Password cant be equal to previous passwords.")
+        res.clearCookie("tokenpass")
+        return HttpResponse.Ok(res, updPass)
+    } catch (error) {
+        next(error.message)
+    }
 }

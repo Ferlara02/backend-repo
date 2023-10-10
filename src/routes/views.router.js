@@ -63,5 +63,9 @@ router.get("/login", (req, res) => {
 router.get("/error-auth-to-login", (req, res) => {
     res.render("errorLogin");
 });
+
+router.get("/new-pass", (req, res) => {
+    res.render("newPass")
+})
   
 export default router

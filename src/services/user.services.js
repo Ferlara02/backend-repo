@@ -1,9 +1,11 @@
 import persistence from "../persistence/daos/factory.js"
+import { sendMail } from "./email.service.js"
 const {userDao, prodDao} = persistence
 
 export const registerUser = async(user, cart) => {
     try {
         const newUser = await userDao.registerUser(user, cart)
+        await sendMail(user, "register")
         return newUser 
     } catch (error) {
         throw new Error(error.message);
@@ -44,5 +46,23 @@ export const addProdToUserCart = async(userId, prodId, quantity) => {
         return userDao.addProdToUserCart(userId, prodId, quantity);
     } catch (error) {
         throw new Error(error.message);
+    }
+}
+
+export const resetPass = async(user) => {
+    try {
+        const token = await userDao.resetPass(user)
+        if(!token) return false
+        return await sendMail(user, "resetPass", token)
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+export const updatePass = async(user, pass) => {
+    try {
+        return await userDao.updatePass(user, pass)
+    } catch (error) {
+        throw new Error(error.message)
     }
 }

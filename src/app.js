@@ -24,6 +24,7 @@ import {Command} from "commander"
 import cors from "cors"
 import { HttpResponse } from './utils/http.response.js';
 const httpResponse = new HttpResponse()
+import config from './config.js';
 
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
@@ -63,7 +64,7 @@ app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 
-app.use(cookieParser())
+app.use(cookieParser(config.SECRET_COOKIES))
 app.use(session(mongoStoreOptions))
 
 app.use(passport.initialize());

@@ -2,7 +2,26 @@ import { UserModel } from "./models/user.model.js";
 import { createHash, isValidPassword } from "../../../utils.js";
 import CartDaoMongoDB from "./cart.dao.js";
 const cartDao = new CartDaoMongoDB()
+import jwt from "jsonwebtoken"
+import config from "../../../config.js";
+const SECRET_KEY = config.SECRET_KEY_JWT
+
 export default class UserDao {
+    /**
+     * 
+     * @param {*} user 
+     * @param {*} timeExp 
+     * @returns token
+     */
+    generateToken(user, timeExp) {
+        const payload = {
+            userId: user._id
+        };
+        const token = jwt.sign(payload, SECRET_KEY, {
+            expiresIn: timeExp,
+        });
+        return token
+    }
     async registerUser(user, cart) {
         try {
             const {email, password} = user
@@ -69,6 +88,30 @@ export default class UserDao {
             return user;
         } catch (error) {
             throw new Error(error.message);
+        }
+    }
+
+    async resetPass(user) {
+        try {
+            const {email} = user
+            const userExist = await this.getByEmail(email)
+            if(!userExist) return false
+            console.log("token--->", this.generateToken(userExist, "1h"));
+            return this.generateToken(userExist, "1h")
+            
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async updatePass(user, pass) {
+        try {
+            const isEqual = isValidPassword(pass, user)
+            if(isEqual) return false
+            const newPass = createHash(pass)
+            return await UserModel.findByIdAndUpdate(user._id, {password: newPass}, {new:true})
+        } catch (error) {
+            throw new Error(error.message)
         }
     }
 }
