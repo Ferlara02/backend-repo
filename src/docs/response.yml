@@ -1,0 +1,227 @@
+components:
+  schema:
+    Products:
+      CreateProduct: 
+        type: object
+        properties:
+          title:
+            type: string
+            description: Nombre del producto
+            example: Motorola G100
+          description:
+            type: string
+            description: Descripcion del producto
+            example: Celular Motorola G100
+          price:
+            type: number
+            description: Precio
+            example: 10000
+          category:
+            type: string
+            description: Categoría del producto
+            example: smartphone
+          code:
+            type: string
+            description: código unico del producto
+            example: 235289na321
+          stock:
+            type: number
+            description: Stock
+            example: 1000
+          thumbnails:
+            type: array
+            description: Array de URLs de fotos
+            example: https://image.com
+          status:
+            type: boolean
+            description: status del producto
+            example: true
+      validationError:
+        type: object
+        properties:
+          msg: 
+            type: string
+            description: Error de validacion de schema
+        example:
+          msg: Validation Schema error
+      notFound:
+        type: object
+        properties:
+          msg:
+            type: string
+            description: Error. Item not found.
+        example:
+          msg: Error de servidor    
+      getAllProducts:
+        type: array
+        products:
+          properties:
+            title:
+              type: string
+              description: Nombre del producto
+              example: Motorola G100
+            description:
+              type: string
+              description: Descripcion del producto
+              example: Celular Motorola G100
+            price:
+              type: number
+              description: Precio
+              example: 10000
+            category:
+              type: string
+              description: Categoría del producto
+              example: smartphone
+            code:
+              type: string
+              description: código unico del producto
+              example: 235289na321
+            stock:
+              type: number
+              description: Stock
+              example: 1000
+            thumbnails:
+              type: array
+              description: Array de URLs de fotos
+              example: https://image.com
+            status:
+              type: boolean
+              description: status del producto
+              example: true
+      getProductById:
+        type: object
+        properties:
+          title:
+            type: string
+            description: Nombre del producto
+            example: Motorola G100
+          description:
+            type: string
+            description: Descripcion del producto
+            example: Celular Motorola G100
+          price:
+            type: number
+            description: Precio
+            example: 10000
+          category:
+            type: string
+            description: Categoría del producto
+            example: smartphone
+          code:
+            type: string
+            description: código unico del producto
+            example: 235289na321
+          stock:
+            type: number
+            description: Stock
+            example: 1000
+          thumbnails:
+            type: array
+            description: Array de URLs de fotos
+            example: https://image.com
+          status:
+            type: boolean
+            description: status del producto
+            example: true
+    Cart:
+      getCartById:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Status de la operacion
+            example: 200
+          message:
+            type: string
+            description: Mensaje de la operacion
+            example: Success
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: ID del producto
+                      example: 64c7ffbc155d8652d4c1d888
+                    title:
+                      type: string
+                      example: Motorola
+                    description:
+                      type: string
+                      example: Celular Motorola G100
+                    price:
+                      type: number
+                      example: 10000
+                    category:
+                      type: string
+                      example: Electronicos
+                    code:
+                      type: string
+                      example: 3242rmkdsa
+                    stock:
+                      type: number
+                    thumbnails:
+                      type: array
+                    status: 
+                      type: boolean
+                quantity:
+                  type: number
+                  description: Cantidad del producto agregado
+      createCart:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Status de la operacion
+            example: 200
+          message:
+            type: string
+            description: Mensaje de la operacion
+            example: Success
+          data:
+            type: object
+            properties:
+              products:
+                type: array
+                items:
+                  - Empty
+              _id:
+                type: array
+                description: Id del carrito
+                example: 652f5d1e19f36f0dab4a5a0f
+      addProdToCart:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Status de la operacion
+            example: 200
+          message:
+            type: string
+            description: Mensaje de la operacion
+            example: Success
+          data:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: ID del carrito
+                example: 64c874b920f3fd3e57e79b56
+              products:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID del producto
+                      example: 64c874b920f6
+                    quantity:
+                      type: number
+                      description: Cantidad agregada de tal producto
+                      example: 3
+              

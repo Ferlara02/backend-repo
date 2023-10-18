@@ -1,0 +1,49 @@
+components: 
+  parameters:
+    schemas:
+      BodyAddProduct:
+        type: object
+        required:
+          - title
+          - description
+          - price
+          - category
+          - code
+          - stock
+          - thumbnails
+          - status
+        properties:
+          title:
+            type: string
+            description: Nombre del producto
+          description:
+            type: string
+            description: Descripcion del producto
+          price:
+            type: number
+            description: Precio
+          category:
+            type: string
+            description: Categoría del producto
+          code:
+            type: string
+            description: código unico del producto
+          stock:
+            type: number
+            description: Stock
+          thumbnails:
+            type: array
+            description: Array de URLs de fotos
+          status:
+            type: boolean
+            description: status del producto
+        example:
+          title: Motorola G100
+          description: SMmartphone Motorola G10...
+          price: 100000
+          category: Celulares
+          code: 100345
+          stock: 10000
+          thumbnails: Https://image.com
+          status: true
+        

@@ -26,6 +26,10 @@ import { HttpResponse } from './utils/http.response.js';
 const httpResponse = new HttpResponse()
 import config from './config.js';
 
+import swaggerUI from "swagger-ui-express"
+import swaggerJSDoc from 'swagger-jsdoc';
+import { info } from './docs/info.js';
+
 const productManager = new ProductManager(__dirname + '/db/products.json')
 
 const mongoStoreOptions = {
@@ -45,6 +49,10 @@ const mongoStoreOptions = {
 
 const app = express()
 
+const specs = swaggerJSDoc(info)
+
+
+
 const commander = new Command()
 commander
     .option("-p <port>", "port server", 8080)
@@ -52,6 +60,8 @@ commander
 
 commander.parse()
 
+
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs))
 app.use(cors({credentials: true, origin: "http://localhost:8080/"}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
