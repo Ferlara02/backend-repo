@@ -3,7 +3,7 @@ const {prodDao} = persistence
 import ProductRepository from "../persistence/repository/product/product.repository.js"
 import { generateProduct } from "../utils/mock.products.js"
 const prodRepository = new ProductRepository()
-
+import config from "../config.js"
 
 export const getAll = async(page, limit, category, available, sort) => {
     try {
@@ -18,10 +18,10 @@ export const getAll = async(page, limit, category, available, sort) => {
             hasPrevPage: response.hasPrevPage,
             hasNextPage: response.hasNextPage,
             prevLink: response.hasPrevPage
-                ? `http://localhost:8080/products?page=${response.prevPage}`
+                ? `${config.CALLBACK_URL}/products?page=${response.prevPage}`
                 : null,
             nextLink: response.hasNextPage
-                ? `http://localhost:8080/products?page=${response.nextPage}`
+                ? `${config.CALLBACK_URL}/products?page=${response.nextPage}`
                 : null,
         }
         return result

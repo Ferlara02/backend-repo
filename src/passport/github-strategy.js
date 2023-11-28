@@ -8,7 +8,7 @@ import config from "../config.js"
 const strategyOptions = {
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/users/profile-github"
+    callbackURL: `${config.CALLBACK_URL}/users/profile-github`
 }
 
 const registerOrLogin = async(accessToken, refreshToken, profile, done) => {

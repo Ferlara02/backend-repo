@@ -6,5 +6,6 @@ export default {
     CLIENT_SECRET: process.env.CLIENT_SECRET,
     NODE_ENV: process.env.NODE_ENV,
     SECRET_KEY_JWT: process.env.SECRET_KEY_JWT,
-    SECRET_COOKIES: process.env.SECRET_COOKIES
+    SECRET_COOKIES: process.env.SECRET_COOKIES,
+    CALLBACK_URL: process.env.CALLBACK_URL
 }
