@@ -38,4 +38,7 @@ API eCommerce genérico w/Express.
         - Se le envía un mail al usuario logueado con una redireccion para restablecer su contraseña.
     - **DELETE**  /users
         - Se eliminan todos los usuarios inactivos por más de dos días.
+- #### Ticket checkout:
+    - **POST:** /api/ticket
+        - Se genera un ticket de compra en caso de que el carrito del usuario logueado tenga productos añadidos.
 - #### Para ver las rutas de Products y Cart, ir a /docs

@@ -13,7 +13,7 @@ import { checkAuth } from "../middlewares/isAuth.js";
 router.get("/", controller.getAll)
 router.get("/:id", controller.getById)
 router.get("/dto/:id", controller.getByIdDTO)
-router.post("/mockingproducts", controller.createMock)
+// router.post("/mockingproducts", controller.createMock)
 router.post("/", checkAuth, checkAdmin, controller.create)
 router.post("/dto", checkAdmin, controller.createProdDTO)
 router.put("/:id", checkAdmin, controller.update)

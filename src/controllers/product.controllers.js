@@ -100,12 +100,12 @@ export const createProdDTO = async(req, res, next) => {
     }
 }
 
-export const createMock = async(req, res) => {
-    try {
-        const response = await service.createMock()
-        logger.info(`MOCK CREADO`)
-        res.json(response)
-    } catch (error) {
-        next(error.message)
-    }
-}
+// export const createMock = async(req, res) => {
+//     try {
+//         const response = await service.createMock()
+//         logger.info(`MOCK CREADO`)
+//         res.json(response)
+//     } catch (error) {
+//         next(error.message)
+//     }
+// }
