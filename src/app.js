@@ -3,7 +3,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
 import handlebars from 'express-handlebars';
-
+import "dotenv/config"
 import { errorHandler } from './middlewares/errorHandler.js';
 import { __dirname } from './utils.js';
 import { Server } from 'socket.io';
@@ -86,7 +86,7 @@ const PORT = commander.opts().p
 const mode = commander.opts().m
 
 
-const httpServer = app.listen(PORT, () => {
+const httpServer = app.listen(process.env.PORT, () => {
     console.log(`Server ok on port ${PORT}, mode: ${mode}}`);
 })
 
