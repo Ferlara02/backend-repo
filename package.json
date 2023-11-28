@@ -37,9 +37,6 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.10.0",
-    "@faker-js/faker": "^6.3.1"
-  },
-  "devDependencies": {
-    "@faker-js/faker": "^6.3.1"
+    "@faker-js/faker": "^8.1.0"
   }
 }
