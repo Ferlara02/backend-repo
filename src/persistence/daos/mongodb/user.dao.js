@@ -4,6 +4,7 @@ import CartDaoMongoDB from "./cart.dao.js";
 const cartDao = new CartDaoMongoDB()
 import jwt from "jsonwebtoken"
 import config from "../../../config.js";
+import { logger } from "../../../utils/winston.config.js"
 const SECRET_KEY = config.SECRET_KEY_JWT
 
 export default class UserDao {
@@ -22,6 +23,20 @@ export default class UserDao {
         });
         return token
     }
+
+
+    async getAll() {
+        try {
+          const users = await UserModel.find({}, {_id: 1, first_name: 1, last_name: 1, email: 1, age: 1, role: 1, profileImg: 1, last_connection: 1})
+          if( !users )
+            return false
+          else
+            return users
+        } catch (error) {
+          logger.error(error.message)
+        }
+    };  
+
     async registerUser(user, cart) {
         try {
             const {email, password} = user
@@ -110,6 +125,42 @@ export default class UserDao {
             if(isEqual) return false
             const newPass = createHash(pass)
             return await UserModel.findByIdAndUpdate(user._id, {password: newPass}, {new:true})
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async deleteOne(id) {
+        try {
+            const user = await UserModel.findByIdAndDelete(id)
+            logger.info(`User ${id} deleted`)
+            return user
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async deleteMany(id) {
+        try {
+            const users = await UserModel.deleteMany({_id: id})
+            logger.info(`The users ${id} were deleted.`)
+            return users
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async changeRole(id) {
+        try {
+            const user = await this.getById(id)
+            if( user && user.role !== "admin") {
+                const role = user.role === 'user' ? 'premium' : 'user'
+                user.role = role
+                user.save()
+                return role
+            }
+            else return false
+            
         } catch (error) {
             throw new Error(error.message)
         }

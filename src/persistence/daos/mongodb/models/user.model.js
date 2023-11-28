@@ -35,7 +35,11 @@ const userSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    last_connection: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 export const UserModel = model('users', userSchema);

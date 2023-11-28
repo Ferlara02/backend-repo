@@ -3,6 +3,10 @@ import { HttpResponse } from "../utils/http.response.js"
 const httpResponse = new HttpResponse()
 import error from "../utils/errors.dictionary.js"
 import { logger } from "../utils/winston.config.js"
+import * as userService from "../services/user.services.js"
+import persistence from "../persistence/daos/factory.js"
+import { sendMail } from "../services/email.service.js"
+const {userDao} = persistence
 
 export const getAll = async (req, res, next) => {
     try {
@@ -32,7 +36,13 @@ export const getById = async (req, res, next) => {
 
 export const create = async (req, res, next) => {
     try {
-        const prodCreated = await service.create(req.body)
+        const { title, description, code, price, stock, category, thumbnails, status } = req.body
+        const user = await userService.getById(req.session.passport?.user)
+        const prod = user?.role === "premium" ? 
+                                    { title, description, code, price, stock, category, thumbnails, owner: user.email, status} 
+                                    :
+                                    { title, description, code, price, stock, category, thumbnails, status } 
+        const prodCreated = await service.create(prod)
         if(!prodCreated) return httpResponse.NotFound(res, error.VALIDATION_ERROR)
         else return httpResponse.Ok(res, prodCreated)
     } catch (error) {
@@ -53,8 +63,16 @@ export const update = async (req, res, next) => {
 export const remove = async (req, res, next) => {
     try {
         const {id} = req.params
+        const prod = await service.getById(id)
         const prodDeleted = await service.remove(id)
-        return httpResponse.Ok(res, prodDeleted)
+        if(prod.owner.includes("@")) {
+            const user = await userDao.getByEmail(prod.owner)
+            await sendMail(user, "prodDelete")
+            return httpResponse.Ok(res, {msg: "Producto perteneciente a un usuario premium eliminado, se ha enviado un correo de aviso a su propietario", data: prodDeleted})
+        }
+        else {
+            return httpResponse.Ok(res, {msg: "Producto eliminado", data: prodDeleted})
+        }
     } catch (error) {
         next(error.message)
     }

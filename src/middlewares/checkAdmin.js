@@ -6,10 +6,10 @@ export const checkAdmin = async(req, res, next) => {
         const user = await userService.getById(req.session.passport?.user)
         if(!user) return res.status(400).json({msg: "Unauthorized"})
         const userRole = user.role
-        if(userRole !== "admin") return res.status(403).json({msg: "Unauthorized. No user admin."})
+        if(userRole !== "admin" && userRole !== "premium")  return res.status(403).json({msg: "Unauthorized. No user admin."})
         next()
     } catch (error) {
-        console.log(error);
         return res.status(401).json({msg: "Unauthorized"})
     }
 }
+

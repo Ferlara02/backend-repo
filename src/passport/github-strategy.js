@@ -12,10 +12,14 @@ const strategyOptions = {
 }
 
 const registerOrLogin = async(accessToken, refreshToken, profile, done) => {
-    console.log("profile:", profile);
+    
     const email = profile._json.email !== null ? profile._json.email : profile._json.blog
     const user = await service.getByEmail(email)
-    if(user) return done(null, user)
+    if(user) {
+        user.last_connection = Date.now()
+        user.save()
+        return done(null, user)
+    }
     const newUser = await service.registerUser({
         first_name: profile._json.name.split(" ")[0],
         last_name: profile._json.name.split(" ")[1],

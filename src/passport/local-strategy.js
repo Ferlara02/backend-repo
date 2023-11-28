@@ -26,7 +26,7 @@ const login = async (req, email, password, done) => {
     try {
         const user = {email, password}
         const userLogin = await service.loginUser(user)
-        console.log(userLogin);
+        
         if(!userLogin) return done(null, false, {message: "User not found"})
         return done(null, userLogin)
     } catch (error) {

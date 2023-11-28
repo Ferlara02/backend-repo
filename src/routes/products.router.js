@@ -7,16 +7,18 @@ import { __dirname } from "../utils.js";
 
 import * as controller from "../controllers/product.controllers.js"
 import { checkAdmin } from "../middlewares/checkAdmin.js";
+import { checkAuth } from "../middlewares/isAuth.js";
 
 
 router.get("/", controller.getAll)
 router.get("/:id", controller.getById)
 router.get("/dto/:id", controller.getByIdDTO)
 router.post("/mockingproducts", controller.createMock)
-router.post("/", checkAdmin, controller.create)
+router.post("/", checkAuth, checkAdmin, controller.create)
 router.post("/dto", checkAdmin, controller.createProdDTO)
 router.put("/:id", checkAdmin, controller.update)
-router.delete("/:id", controller.remove)
+
+router.delete("/:id", checkAdmin, controller.remove)
 
 export default router;
 

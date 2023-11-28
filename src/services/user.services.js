@@ -15,6 +15,10 @@ export const registerUser = async(user, cart) => {
 export const loginUser = async(user) => {
     try {
         const userExist = await userDao.loginUser(user)
+        if(userExist) {
+            userExist.last_connection = Date.now()
+            userExist.save()
+        }
         return userExist
     } catch (error) {
         throw new Error(error.message);
