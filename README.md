@@ -3,6 +3,9 @@ API eCommerce genérico w/Express.
 
 ### Configuración
 - Setear variables de entorno siguiendo el .envExample
+- User con rol admin hardcodeado:
+    - email: admin@coder.com
+    - pass: admin1234
 
 ## Rutas
 - #### Documentación:
